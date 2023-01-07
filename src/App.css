@@ -1,0 +1,54 @@
+/* Google Font Link */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+:root {
+  --sidebar-bg: #20262b;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  position: relative;
+  background: #e4e9f7;
+  min-height: 100vh;
+  top: 0;
+  left: 7.8rem;
+  width: calc(100% - 7.8rem);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.sidebar.open ~ .container {
+  left: 23rem;
+  width: calc(100% - 23rem);
+}
+
+.message {
+  font-size: 1.6rem;
+  font-weight: 700;
+  padding: 2rem;
+}
+
+*:focus {
+  /* outline: 2px ridge #dbe5ff; */
+
+  /* method 1 */
+  /* outline: #dbe5ff ridge 2px;
+  border-radius: 1rem; */
+
+  outline: 2px solid #dbe5ff;
+  border-radius: 1rem;
+}
+@media (max-width: 42rem) {
+  .sidebar .navItem .tooltip {
+    display: none;
+  }
+}
