@@ -13,11 +13,23 @@ const ContactsList = (props) => {
   const baseURL = useSelector((state) => state.baseURL);
   const filterQuery = useSelector((state) => state.filterQuery);
   const nothingSelected = Object.values(filterQuery).every((item) => item == 0);
-  console.log(filterQuery);
 
-  const filterURL = nothingSelected
-    ? baseURL + "?pc=1&hc=1&ec=1&rc=1"
-    : `${baseURL}pc=${filterQuery.item0}&hc=${filterQuery.item1}&ec=${filterQuery.item2}&rc${filterQuery.item3}`;
+  // nothingSelected
+  //   ?
+  //   : `${baseURL}getFilteredLabels/?pc=${filterQuery.item0}&hc=${filterQuery.item1}&ec=${filterQuery.item2}&rc=${filterQuery.item3}`;
+
+  const [filterURL, setFilterURL] = useState("");
+
+  useEffect(() => {
+    if (nothingSelected) {
+      setFilterURL(baseURL + "getFilteredLabels/?pc=1&hc=1&ec=1&rc=1");
+    } else {
+      setFilterURL(
+        `${baseURL}getFilteredLabels/?pc=${filterQuery.item0}&hc=${filterQuery.item1}&ec=${filterQuery.item2}&rc=${filterQuery.item3}`
+      );
+    }
+  }, [filterURL, nothingSelected, filterQuery, baseURL]);
+
   console.log(filterURL);
 
   const [contacts, setContacts] = useState([
@@ -1564,7 +1576,7 @@ const ContactsList = (props) => {
     },
   ]);
 
-  async function fetchContacts(url) {
+  async function fetchContacts(filterURL) {
     try {
       const response = await fetch(filterURL);
       const contacts = await response.json();
@@ -1577,7 +1589,7 @@ const ContactsList = (props) => {
 
   useEffect(() => {
     fetchContacts(filterURL);
-  }, []);
+  }, [filterURL]);
 
   let contactsEdited = contacts.map((contact) => ({
     ...contact,
